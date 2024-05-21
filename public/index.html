@@ -1,0 +1,69 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+<h1>
+  SAMSUNG Galaxy S23 Ultra(12G/256G)智慧手機-墨竹綠 價格查詢
+</h1>
+<form id="price_form">
+  <label for="day">Month(YYYY/MM):</label>
+  <!--幫我生成一個下拉選單從2023/2月到2024/5 月，每月一個選項-->
+    <select id="day" name="day">
+        <option value="2023-2">2023/2</option>
+        <option value="2023-3">2023/3</option>
+        <option value="2023-4">2023/4</option>
+        <option value="2023-5">2023/5</option>
+        <option value="2023-6">2023/6</option>
+        <option value="2023-7">2023/7</option>
+        <option value="2023-8">2023/8</option>
+        <option value="2023-9">2023/9</option>
+        <option value="2023-10">2023/10</option>
+        <option value="2023-11">2023/11</option>
+        <option value="2023-12">2023/12</option>
+        <option value="2024-1">2024/1</option>
+        <option value="2024-2">2024/2</option>
+        <option value="2024-3">2024/3</option>
+        <option value="2024-4">2024/4</option>
+        <option value="2024-5">2024/5</option>
+    </select>
+  <input type="submit" value="send">
+</form>
+<h1 id="log"></h1>
+
+<script>
+  // 幫我把上面的表單選擇的值，用post 的方式送到 /api/search_price 這個路徑，再用fetch 把回傳的結果印出來，檢測含有price 只留下其數值
+    document.getElementById('price_form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var day = document.getElementById('day').value;
+        fetch('/api/search_price', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date: day })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                // 這裡要把data 裡面的price 取出來，並且只留下數值
+                  var price = data.map(function (item) {
+                        return item.price;
+                    });
+                document.getElementById('log').innerText = price;
+
+
+
+            });
+    });
+
+
+
+</script>
+
+</body>
+
+</html>
